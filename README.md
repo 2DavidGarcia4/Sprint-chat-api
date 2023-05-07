@@ -1,3 +1,3 @@
-#Sprintchat api
+# Sprintchat api
 
-###Api de sprintchat una app de mensajeria.
+### Api de sprintchat una app de mensajeria.
