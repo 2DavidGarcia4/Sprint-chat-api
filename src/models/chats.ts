@@ -1,10 +1,12 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
+import { UsersModel } from "./users";
 
 export const ChatsModel = sequelize.define('chats', {
   id: {
     type: DataTypes.UUID,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
   },
   name: {
     type: DataTypes.STRING,
@@ -15,7 +17,11 @@ export const ChatsModel = sequelize.define('chats', {
   },
   ownerId: {
     type: DataTypes.UUID,
-    field: 'owner_id'
+    field: 'owner_id',
+    references: {
+      model: UsersModel,
+      key: 'id'
+    }
   },
   iconUrl: {
     type: DataTypes.TEXT,

@@ -1,20 +1,31 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
+import { ChatsModel } from "./chats";
+import { UsersModel } from "./users";
 
 export const InvitationsModel = sequelize.define('invitations', {
   id: {
     type: DataTypes.UUID,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
   },
   groupId: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'group_id'
+    field: 'group_id',
+    references: {
+      model: ChatsModel,
+      key: 'id'
+    }
   },
   createdBy: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'created_by'
+    field: 'created_by',
+    references: {
+      model: UsersModel,
+      key: 'id'
+    }
   },
   code: {
     type: DataTypes.STRING,

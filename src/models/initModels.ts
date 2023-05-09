@@ -35,9 +35,9 @@ export function initializeModels() {
   ChatsModel.hasMany(PinnedMessagesModel)
   UsersModel.hasMany(PinnedMessagesModel)
 
-  ChatPermissionsModel.belongsTo(UsersModel)
+  ChatPermissionsModel.belongsTo(MembersModel)
   ChatPermissionsModel.belongsTo(ChatsModel)
-  UsersModel.hasMany(ChatPermissionsModel)
+  MembersModel.hasMany(ChatPermissionsModel)
   ChatsModel.hasMany(ChatPermissionsModel)
 
   ChatNotificationsModel.belongsTo(UsersModel)
@@ -45,18 +45,10 @@ export function initializeModels() {
   UsersModel.hasMany(ChatNotificationsModel)
   ChatsModel.hasMany(ChatNotificationsModel)
 
-  InvitationsModel.belongsTo(UsersModel, {
-    foreignKey: 'created_by'
-  })
-  InvitationsModel.belongsTo(ChatsModel, {
-    foreignKey: 'group_id'
-  })
-  UsersModel.hasMany(InvitationsModel, {
-    foreignKey: 'created_by'
-  })
-  ChatNotificationsModel.hasMany(InvitationsModel, {
-    foreignKey: 'group_id'
-  })
+  InvitationsModel.belongsTo(UsersModel)
+  InvitationsModel.belongsTo(ChatsModel)
+  UsersModel.hasMany(InvitationsModel)
+  ChatNotificationsModel.hasMany(InvitationsModel)
 
   SessionsModel.belongsTo(UsersModel)
   UsersModel.hasMany(SessionsModel)

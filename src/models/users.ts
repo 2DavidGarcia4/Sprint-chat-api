@@ -24,7 +24,7 @@ export const UsersModel = sequelize.define('users', {
   },
   friends: {
     type: DataTypes.ARRAY(DataTypes.UUID),
-    allowNull: false
+    defaultValue: []
   },
   password: {
     type: DataTypes.STRING,
@@ -39,6 +39,9 @@ export const UsersModel = sequelize.define('users', {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+    validate: {
+      isLowercase: true
+    },
     field: 'user_name'
   },
   phoneNumber: {
@@ -47,12 +50,12 @@ export const UsersModel = sequelize.define('users', {
   },
   blockedUsers: {
     type: DataTypes.ARRAY(DataTypes.UUID),
-    allowNull: false,
+    defaultValue: [],
     field: 'blocked_users'
   },
   archivedChats: {
     type: DataTypes.ARRAY(DataTypes.UUID),
-    allowNull: false,
+    defaultValue: [],
     field: 'archived_chats'
   }
 })
