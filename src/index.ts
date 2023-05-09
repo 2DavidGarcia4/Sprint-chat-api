@@ -3,6 +3,7 @@ import cors from 'cors'
 import { sequelize } from './utils/database'
 
 import { port } from './config'
+import { initializeModels } from './models/initModels'
 
 const app = express()
 
@@ -15,9 +16,9 @@ app.get('/ping', (_, res)=> {
 
 ;(async () => {
   try {
-    // await sequelize.sync({force: false});
+    await sequelize.sync({force: false});
     console.log('Connection has been established successfully.');
-    // initModels()
+    initializeModels()
 
     app.listen(port, () => {
       console.log(`Server started at port ${port}`);

@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
 
-export const ChatPermissionsModel = sequelize.define('chat_permissions', {
+export const PinnedMessagesModel = sequelize.define('pinned_messages', {
   id: {
     type: DataTypes.UUID,
     primaryKey: true
@@ -11,14 +11,13 @@ export const ChatPermissionsModel = sequelize.define('chat_permissions', {
     allowNull: false,
     field: 'chat_id'
   },
-  memberId: {
+  messageId: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'member_id'
+    field: 'message_id'
   },
-  permissionLevel: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-    field: 'permission_level'
+  author: {
+    type: DataTypes.UUID,
+    allowNull: false
   }
 })
