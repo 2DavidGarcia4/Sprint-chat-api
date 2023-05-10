@@ -1,8 +1,15 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { UsersModel } from "./users";
 
-export const FriendsRequestsModel = sequelize.define('friends_requests', {
+class FriendsRequests extends Model{
+  public id!: string
+  public senderId!: string
+  public receiverId!: string
+  public message!: string | null
+}
+
+export const FriendsRequestsModel = FriendsRequests.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -29,4 +36,7 @@ export const FriendsRequestsModel = sequelize.define('friends_requests', {
   message: {
     type: DataTypes.STRING
   }
+}, {
+  sequelize,
+  tableName: 'friends_requests'
 })

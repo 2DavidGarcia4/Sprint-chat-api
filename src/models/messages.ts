@@ -1,9 +1,18 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
 
-export const MessagesModel = sequelize.define('messages', {
+class Messages extends Model{
+  public id!: string
+  public chatId!: string
+  public authorId!: string
+  public content!: number
+  public edited!: boolean
+  public referenceId!: string | null
+}
+
+export const MessagesModel = Messages.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -39,4 +48,7 @@ export const MessagesModel = sequelize.define('messages', {
     type: DataTypes.UUID,
     field: 'reference_id'
   }
+}, {
+  sequelize,
+  tableName: 'messages'
 })

@@ -1,8 +1,18 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { UsersModel } from "./users";
 
-export const ChatsModel = sequelize.define('chats', {
+class Chats extends Model{
+  public id!: string
+  public name!: string | null
+  public type!: number
+  public ownerId!: string
+  public iconUrl!: string | null
+  public description!: string | null
+  public lastMessageId!: string
+}
+
+export const ChatsModel = Chats.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -36,4 +46,7 @@ export const ChatsModel = sequelize.define('chats', {
   lastMessageId: {
     type: DataTypes.UUID,
   }
+}, {
+  sequelize,
+  tableName: 'chats'
 })

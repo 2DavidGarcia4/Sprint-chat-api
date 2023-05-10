@@ -1,5 +1,5 @@
 import { UsersModel } from "./users";
-import { FriendsRequestsModel } from "./friendRequests";
+import { FriendsRequestsModel } from "./friendsRequests";
 import { ChatsModel } from "./chats";
 import { ChatNotificationsModel } from "./chatNotifications";
 import { ChatPermissionsModel } from "./chatPermissions";

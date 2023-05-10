@@ -1,9 +1,17 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
 
-export const ChatNotificationsModel = sequelize.define('chat_notifications', {
+class ChatNotifications extends Model{
+  public id!: string
+  public chatId!: string
+  public memberId!: string
+  public disabled!: boolean
+  public amount!: number
+}
+
+export const ChatNotificationsModel = ChatNotifications.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -35,4 +43,7 @@ export const ChatNotificationsModel = sequelize.define('chat_notifications', {
     type: DataTypes.INTEGER,
     allowNull: false
   } 
+}, {
+  sequelize,
+  tableName: 'chat_notifications'
 })

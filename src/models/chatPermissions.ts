@@ -1,9 +1,16 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
 
-export const ChatPermissionsModel = sequelize.define('chat_permissions', {
+class ChatPermissions extends Model{
+  public id!: string
+  public chatId!: string
+  public memberId!: string
+  public permissionLevel!: number
+}
+
+export const ChatPermissionsModel = ChatPermissions.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -32,4 +39,7 @@ export const ChatPermissionsModel = sequelize.define('chat_permissions', {
     defaultValue: 0,
     field: 'permission_level'
   }
+}, {
+  sequelize,
+  tableName: 'chat_permissions'
 })

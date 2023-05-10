@@ -1,10 +1,17 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { MessagesModel } from "./messages";
 import { UsersModel } from "./users";
 
-export const PinnedMessagesModel = sequelize.define('pinned_messages', {
+class PinnedMessages extends Model {
+  public id!: string
+  public chatId!: string
+  public messageId!: string
+  public author!: string
+}
+
+export const PinnedMessagesModel = PinnedMessages.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -36,4 +43,7 @@ export const PinnedMessagesModel = sequelize.define('pinned_messages', {
       key: 'id'
     }
   }
+}, {
+  sequelize,
+  tableName: 'pinned_messages'
 })

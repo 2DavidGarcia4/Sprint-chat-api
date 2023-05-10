@@ -1,7 +1,21 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 
-export const UsersModel = sequelize.define('users', {
+class Users extends Model {
+  public id!: string
+  public name!: string
+  public email!: string
+  public about!: string | null
+  public friends!: string[]
+  public password!: string
+  public avatarUrl!: string | null
+  public userName!: string
+  public phoneNumber!: string | null
+  public blockedUsers!: string[]
+  public archivedChats!: string[]
+}
+
+export const UsersModel = Users.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -58,4 +72,9 @@ export const UsersModel = sequelize.define('users', {
     defaultValue: [],
     field: 'archived_chats'
   }
-})
+},
+  {
+    sequelize,
+    tableName: 'users'
+  }
+)

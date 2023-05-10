@@ -1,9 +1,20 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
 
-export const InvitationsModel = sequelize.define('invitations', {
+class Invitations extends Model{
+  public id!: string
+  public groupId!: string
+  public createdBy!: string
+  public code!: string
+  public uses!: number
+  public maxAge!: number
+  public maxUses!: number
+  public inviteds!: string[]
+  public expiresAt!: string
+}
+export const InvitationsModel = Invitations.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -54,4 +65,7 @@ export const InvitationsModel = sequelize.define('invitations', {
     defaultValue: sequelize.literal("NOW() + INTERVAL '4 DAYS'"),
     field: 'expires_at'
   }
+}, {
+  sequelize,
+  tableName: 'invitations'
 })

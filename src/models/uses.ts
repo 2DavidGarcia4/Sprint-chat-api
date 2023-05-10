@@ -1,8 +1,14 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, ModelStatic, Model, InferAttributes, Options, ModelDefined, Optional } from "sequelize";
 import { sequelize } from "../utils/database";
 import { UsersModel } from "./users";
 
-export const UsesModel = sequelize.define('uses', {
+class Uses extends Model {
+  public id!: string
+  public userId!: string
+  public amount!: number
+}
+
+export const UsesModel = Uses.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -21,4 +27,7 @@ export const UsesModel = sequelize.define('uses', {
     type: DataTypes.INTEGER,
     defaultValue: 1
   }
-})
+}, {
+  sequelize,
+  tableName: 'uses',
+});

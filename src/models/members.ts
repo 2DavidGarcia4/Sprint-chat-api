@@ -1,9 +1,15 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
 
-export const MembersModel = sequelize.define('members', {
+class Members extends Model{
+  public id!: string
+  public chatId!: string
+  public memberId!: string
+}
+
+export const MembersModel = Members.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -27,4 +33,7 @@ export const MembersModel = sequelize.define('members', {
       key: 'id'
     }
   }
+}, {
+  sequelize,
+  tableName: 'members'
 })

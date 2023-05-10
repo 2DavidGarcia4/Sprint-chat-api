@@ -1,8 +1,14 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 import { UsersModel } from "./users";
 
-export const SessionsModel = sequelize.define('sessions', {
+class Sessions extends Model {
+  public id!: string
+  public userId!: string
+  public endAt!: string | null
+}
+
+export const SessionsModel = Sessions.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -21,4 +27,7 @@ export const SessionsModel = sequelize.define('sessions', {
     type: DataTypes.DATE,
     field: 'end_at'
   }
+}, {
+  sequelize,
+  tableName: 'sessions'
 })
