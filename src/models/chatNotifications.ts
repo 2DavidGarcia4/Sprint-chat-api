@@ -45,5 +45,5 @@ export const ChatNotificationsModel = ChatNotifications.init({
   } 
 }, {
   sequelize,
-  tableName: 'chat_notifications'
+  modelName: 'chat_notifications'
 })

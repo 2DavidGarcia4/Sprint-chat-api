@@ -50,5 +50,5 @@ export const MessagesModel = Messages.init({
   }
 }, {
   sequelize,
-  tableName: 'messages'
+  modelName: 'messages'
 })

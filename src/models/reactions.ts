@@ -50,5 +50,5 @@ export const ReactionsModel = Reactions.init({
   }
 }, {
   sequelize,
-  tableName: 'reactions'
+  modelName: 'reactions'
 })

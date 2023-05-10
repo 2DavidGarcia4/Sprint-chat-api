@@ -48,5 +48,5 @@ export const ChatsModel = Chats.init({
   }
 }, {
   sequelize,
-  tableName: 'chats'
+  modelName: 'chats'
 })

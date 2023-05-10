@@ -75,6 +75,7 @@ export const UsersModel = Users.init({
 },
   {
     sequelize,
+    modelName: 'users',
     tableName: 'users'
   }
 )

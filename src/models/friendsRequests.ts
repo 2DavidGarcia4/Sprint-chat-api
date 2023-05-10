@@ -38,5 +38,5 @@ export const FriendsRequestsModel = FriendsRequests.init({
   }
 }, {
   sequelize,
-  tableName: 'friends_requests'
+  modelName: 'friends_requests'
 })

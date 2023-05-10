@@ -67,5 +67,5 @@ export const InvitationsModel = Invitations.init({
   }
 }, {
   sequelize,
-  tableName: 'invitations'
+  modelName: 'invitations'
 })

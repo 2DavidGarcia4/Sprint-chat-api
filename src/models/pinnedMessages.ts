@@ -45,5 +45,5 @@ export const PinnedMessagesModel = PinnedMessages.init({
   }
 }, {
   sequelize,
-  tableName: 'pinned_messages'
+  modelName: 'pinned_messages'
 })

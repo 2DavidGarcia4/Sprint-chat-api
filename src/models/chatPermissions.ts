@@ -41,5 +41,5 @@ export const ChatPermissionsModel = ChatPermissions.init({
   }
 }, {
   sequelize,
-  tableName: 'chat_permissions'
+  modelName: 'chat_permissions'
 })

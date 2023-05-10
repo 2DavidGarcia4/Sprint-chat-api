@@ -35,5 +35,5 @@ export const MembersModel = Members.init({
   }
 }, {
   sequelize,
-  tableName: 'members'
+  modelName: 'members'
 })

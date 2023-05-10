@@ -29,5 +29,6 @@ export const UsesModel = Uses.init({
   }
 }, {
   sequelize,
-  tableName: 'uses',
+  modelName: 'uses',
+  tableName: 'uses'
 });

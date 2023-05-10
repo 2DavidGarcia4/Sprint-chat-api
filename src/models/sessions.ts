@@ -29,5 +29,5 @@ export const SessionsModel = Sessions.init({
   }
 }, {
   sequelize,
-  tableName: 'sessions'
+  modelName: 'sessions',
 })
