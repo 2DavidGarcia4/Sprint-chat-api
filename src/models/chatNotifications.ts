@@ -1,9 +1,10 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
+import { DefaultModel } from "../utils/functions";
 
-class ChatNotifications extends Model{
+class ChatNotifications extends DefaultModel {
   public id!: string
   public chatId!: string
   public memberId!: string

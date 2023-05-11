@@ -1,7 +1,9 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
+import { DefaultModel } from "../utils/functions";
 
-class Users extends Model {
+
+class Users extends DefaultModel {
   public id!: string
   public name!: string
   public email!: string

@@ -1,9 +1,10 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
 import { UsersModel } from "./users";
 import { MessagesModel } from "./messages";
+import { DefaultModel } from "../utils/functions";
 
-class Reactions extends Model{
+class Reactions extends DefaultModel{
   public id!: string
   public authorId!: string
   public messageId!: string

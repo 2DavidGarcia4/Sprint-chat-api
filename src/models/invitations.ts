@@ -1,9 +1,10 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
+import { DefaultModel } from "../utils/functions";
 
-class Invitations extends Model{
+class Invitations extends DefaultModel {
   public id!: string
   public groupId!: string
   public createdBy!: string

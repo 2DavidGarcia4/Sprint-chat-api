@@ -1,8 +1,9 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
 import { UsersModel } from "./users";
+import { DefaultModel } from "../utils/functions";
 
-class Sessions extends Model {
+class Sessions extends DefaultModel {
   public id!: string
   public userId!: string
   public endAt!: string | null
@@ -19,8 +20,8 @@ export const SessionsModel = Sessions.init({
     allowNull: false,
     field: 'user_id',
     references: {
-      model: UsersModel,
-      key: 'id'
+      key: 'id',
+      model: UsersModel
     }
   },
   endAt: {

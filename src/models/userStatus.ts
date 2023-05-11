@@ -1,15 +1,17 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
-import { UsersModel } from "./users";
 import { DefaultModel } from "../utils/functions";
+import { UsersModel } from "./users";
 
-class Uses extends DefaultModel {
+class UserStatus extends DefaultModel {
   public id!: string
   public userId!: string
-  public amount!: number
+  public status!: number
+  public emoji!: string | null
+  public message!: string | null
 }
 
-export const UsesModel = Uses.init({
+export const UserStatusModel = UserStatus.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -24,12 +26,18 @@ export const UsesModel = Uses.init({
       model: UsersModel
     }
   },
-  amount: {
+  status: {
     type: DataTypes.INTEGER,
-    defaultValue: 1
+    allowNull: false
+  },
+  emoji: {
+    type: DataTypes.STRING
+  },
+  message: {
+    type: DataTypes.STRING
   }
 }, {
   sequelize,
-  modelName: 'uses',
-  tableName: 'uses'
-});
+  modelName: 'user_status',
+  tableName: 'user_status'
+})

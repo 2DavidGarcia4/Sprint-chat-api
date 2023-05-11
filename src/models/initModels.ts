@@ -10,15 +10,35 @@ import { ReactionsModel } from "./reactions";
 import { SessionsModel } from "./sessions";
 import { UsesModel } from "./uses";
 import { InvitationsModel } from "./invitations";
+import { UserStatusModel } from "./userStatus";
 
 export function initializeModels() {
 
   UsersModel.belongsToMany(ChatsModel, {through: MembersModel})
   ChatsModel.belongsToMany(UsersModel, {through: MembersModel})
 
-  UsersModel.hasMany(FriendsRequestsModel)
-  FriendsRequestsModel.belongsTo(UsersModel)
+  UsersModel.hasMany(FriendsRequestsModel, {
+    foreignKey: 'senderId',
+    as: 'sentRequests'
+  });
   
+  UsersModel.hasMany(FriendsRequestsModel, {
+    foreignKey: 'receiverId',
+    as: 'receivedRequests'
+  });
+  FriendsRequestsModel.belongsTo(UsersModel, {
+    foreignKey: 'senderId',
+    as: 'sentRequests'
+  });
+  
+  FriendsRequestsModel.belongsTo(UsersModel, {
+    foreignKey: 'receiverId',
+    as: 'receivedRequests'
+  });
+  
+  UserStatusModel.belongsTo(UsersModel)
+  UsersModel.hasOne(UserStatusModel, {as: 'status', foreignKey: 'userId'})
+
   UsersModel.hasMany(MessagesModel)
   MessagesModel.belongsTo(UsersModel)
   MessagesModel.belongsTo(ChatsModel)

@@ -1,9 +1,10 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/database";
 import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
+import { DefaultModel } from "../utils/functions";
 
-class Members extends Model{
+class Members extends DefaultModel {
   public id!: string
   public chatId!: string
   public memberId!: string
@@ -24,10 +25,10 @@ export const MembersModel = Members.init({
       key: 'id'
     }
   },
-  memberId: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'member_id',
+    field: 'user_id',
     references: {
       model: UsersModel,
       key: 'id'
