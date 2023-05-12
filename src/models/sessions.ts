@@ -6,7 +6,7 @@ import { DefaultModel } from "../utils/functions";
 class Sessions extends DefaultModel {
   public id!: string
   public userId!: string
-  public endAt!: string | null
+  public endAt!: Date | null
 }
 
 export const SessionsModel = Sessions.init({
