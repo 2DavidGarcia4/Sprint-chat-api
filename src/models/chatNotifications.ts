@@ -7,7 +7,7 @@ import { DefaultModel } from "../utils/functions";
 class ChatNotifications extends DefaultModel {
   public id!: string
   public chatId!: string
-  public memberId!: string
+  public userId!: string
   public disabled!: boolean
   public amount!: number
 }
@@ -27,13 +27,13 @@ export const ChatNotificationsModel = ChatNotifications.init({
       key: 'id'
     }
   },
-  memberId: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'member_id',
+    field: 'user_id',
     references: {
-      model: UsersModel,
-      key: 'id'
+      key: 'id',
+      model: UsersModel
     }
   },
   disabled: {

@@ -2,7 +2,7 @@ import { UsersModel } from "./users";
 import { FriendsRequestsModel } from "./friendsRequests";
 import { ChatsModel } from "./chats";
 import { ChatNotificationsModel } from "./chatNotifications";
-import { ChatPermissionsModel } from "./chatPermissions";
+import { PermissionsModel } from "./permissions";
 import { MembersModel } from "./members";
 import { MessagesModel } from "./messages";
 import { PinnedMessagesModel } from "./pinnedMessages";
@@ -55,14 +55,14 @@ export function initializeModels() {
   ChatsModel.hasMany(PinnedMessagesModel)
   UsersModel.hasMany(PinnedMessagesModel)
 
-  ChatPermissionsModel.belongsTo(MembersModel)
-  ChatPermissionsModel.belongsTo(ChatsModel)
-  MembersModel.hasMany(ChatPermissionsModel)
-  ChatsModel.hasMany(ChatPermissionsModel)
+  PermissionsModel.belongsTo(UsersModel)
+  PermissionsModel.belongsTo(ChatsModel)
+  UsersModel.hasMany(PermissionsModel)
+  ChatsModel.hasMany(PermissionsModel)
 
-  ChatNotificationsModel.belongsTo(UsersModel)
+  ChatNotificationsModel.belongsTo(UsersModel, {foreignKey: 'userId', as: 'notifications'})
   ChatNotificationsModel.belongsTo(ChatsModel)
-  UsersModel.hasMany(ChatNotificationsModel)
+  UsersModel.hasMany(ChatNotificationsModel, {foreignKey: 'id', as: 'notifications'})
   ChatsModel.hasMany(ChatNotificationsModel)
 
   InvitationsModel.belongsTo(UsersModel)

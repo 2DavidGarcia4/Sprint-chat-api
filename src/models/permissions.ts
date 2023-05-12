@@ -4,14 +4,14 @@ import { ChatsModel } from "./chats";
 import { UsersModel } from "./users";
 import { DefaultModel } from "../utils/functions";
 
-class ChatPermissions extends DefaultModel {
+class Permissions extends DefaultModel {
   public id!: string
   public chatId!: string
-  public memberId!: string
+  public userId!: string
   public permissionLevel!: number
 }
 
-export const ChatPermissionsModel = ChatPermissions.init({
+export const PermissionsModel = Permissions.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -26,13 +26,13 @@ export const ChatPermissionsModel = ChatPermissions.init({
       key: 'id'
     }
   },
-  memberId: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'member_id',
+    field: 'user_id',
     references: {
+      key: 'id',
       model: UsersModel,
-      key: 'id'
     }
   },
   permissionLevel: {
@@ -42,5 +42,6 @@ export const ChatPermissionsModel = ChatPermissions.init({
   }
 }, {
   sequelize,
-  modelName: 'chat_permissions'
+  modelName: 'permissions',
+  tableName: 'permissions'
 })

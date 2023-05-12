@@ -15,6 +15,7 @@ class Users extends DefaultModel {
   public phoneNumber!: string | null
   public blockedUsers!: string[]
   public archivedChats!: string[]
+  public chats?: string[]
 }
 
 export const UsersModel = Users.init({

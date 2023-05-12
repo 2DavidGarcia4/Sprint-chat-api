@@ -11,6 +11,7 @@ class Chats extends DefaultModel {
   public iconUrl!: string | null
   public description!: string | null
   public lastMessageId!: string
+  public users?: any[]
 }
 
 export const ChatsModel = Chats.init({
