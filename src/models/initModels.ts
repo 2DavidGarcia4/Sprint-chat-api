@@ -5,6 +5,8 @@ import { ChatNotificationsModel } from "./chatNotifications";
 import { PermissionsModel } from "./permissions";
 import { MembersModel } from "./members";
 import { MessagesModel } from "./messages";
+import { MessagesReadsModel } from "./messagesReads";
+import { DeletedMessagesModel } from "./deletedMessages";
 import { PinnedMessagesModel } from "./pinnedMessages";
 import { ReactionsModel } from "./reactions";
 import { SessionsModel } from "./sessions";
@@ -39,11 +41,23 @@ export function initializeModels() {
   UserStatusModel.belongsTo(UsersModel)
   UsersModel.hasOne(UserStatusModel, {as: 'status', foreignKey: 'userId'})
 
-  UsersModel.hasMany(MessagesModel)
-  MessagesModel.belongsTo(UsersModel)
+  UsersModel.hasMany(MessagesModel, {foreignKey: 'authorId'})
+  MessagesModel.belongsTo(UsersModel, {foreignKey: 'authorId'})
   MessagesModel.belongsTo(ChatsModel)
   ChatsModel.hasMany(MessagesModel)
   MessagesModel.hasMany(ReactionsModel)
+
+  UsersModel.belongsToMany(MessagesModel, { through: MessagesReadsModel, foreignKey: 'userId' })
+  MessagesModel.belongsToMany(UsersModel, { through: MessagesReadsModel, foreignKey: 'messageId' })
+  MessagesReadsModel.belongsTo(UsersModel)
+  MessagesReadsModel.belongsTo(MessagesModel)
+  UsersModel.hasMany(MessagesReadsModel)
+  MessagesModel.hasMany(MessagesReadsModel)
+
+  DeletedMessagesModel.belongsTo(UsersModel, { foreignKey: 'deletedBy' })
+  DeletedMessagesModel.belongsTo(MessagesModel)
+  UsersModel.hasMany(DeletedMessagesModel, { foreignKey: 'deletedBy' })
+  MessagesModel.hasOne(DeletedMessagesModel, { foreignKey: 'id', as: 'deleted' })
 
   ReactionsModel.belongsTo(MessagesModel)
   ReactionsModel.belongsTo(UsersModel)

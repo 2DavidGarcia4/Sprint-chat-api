@@ -1,51 +1,44 @@
-import { DataTypes } from "sequelize";
+import { DefaultModel } from "../utils/functions";
 import { sequelize } from "../utils/database";
-import { ChatsModel } from "./chats";
+import { DataTypes } from "sequelize";
 import { MessagesModel } from "./messages";
 import { UsersModel } from "./users";
-import { DefaultModel } from "../utils/functions";
 
-class PinnedMessages extends DefaultModel {
+class MessagesReads extends DefaultModel {
   public id!: string
-  public chatId!: string
   public messageId!: string
-  public author!: string
+  public userId!: string
+  public read!: boolean
 }
 
-export const PinnedMessagesModel = PinnedMessages.init({
+export const MessagesReadsModel = MessagesReads.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4
   },
-  chatId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    field: 'chat_id',
-    references: {
-      key: 'id',
-      model: ChatsModel
-    }
-  },
   messageId: {
     type: DataTypes.UUID,
     allowNull: false,
-    field: 'message_id',
     references: {
       key: 'id',
       model: MessagesModel
     }
   },
-  author: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
       key: 'id',
       model: UsersModel
     }
+  },
+  read: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   sequelize,
-  modelName: 'pinned_messages',
-  tableName: 'pinned_messages'
-})
+  modelName: 'messages_reads',
+  tableName: 'messages_reads'
+}) 

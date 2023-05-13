@@ -33,8 +33,8 @@ export const MessagesModel = Messages.init({
     allowNull: false,
     field: 'author_id',
     references: {
-      model: UsersModel,
-      key: 'id'
+      key: 'id',
+      model: UsersModel
     }
   },
   content: {
