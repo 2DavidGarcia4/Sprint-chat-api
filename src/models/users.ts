@@ -55,9 +55,6 @@ export const UsersModel = Users.init({
     type: DataTypes.STRING(30),
     allowNull: false,
     unique: true,
-    validate: {
-      isLowercase: true
-    },
     field: 'user_name'
   },
   phoneNumber: {
