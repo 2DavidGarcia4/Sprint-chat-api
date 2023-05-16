@@ -26,7 +26,6 @@ const getUserByEmail = (email: string) =>UsersModel.findOne({
 
 
 const createUser = (data: {
-  name: string,
   email: string,
   password: string,
   userName: string

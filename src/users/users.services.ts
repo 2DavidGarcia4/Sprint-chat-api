@@ -6,16 +6,15 @@ import { hashPassword } from "../utils/functions"
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, userName } = req.body
+    const { email, password, userName } = req.body
 
-    if(validators.missingData(res, [name, email, password, userName], {
-      name: 'string',
+    if(validators.missingData(res, [email, password, userName], {
       email: 'string & unique',
       password: 'string',
       userName: 'string & unique',
     })) return 
 
-    const user = await usersControllers.createUser({name, email, password: hashPassword(password), userName})
+    const user = await usersControllers.createUser({email, password: hashPassword(password), userName})
     
     res.status(201).json({
       message: 'New registered user',

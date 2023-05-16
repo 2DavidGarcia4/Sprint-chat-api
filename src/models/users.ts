@@ -5,7 +5,7 @@ import { DefaultModel } from "../utils/functions";
 
 class Users extends DefaultModel {
   public id!: string
-  public name!: string
+  public name!: string | null
   public email!: string
   public about!: string | null
   public friends!: string[]
@@ -26,7 +26,6 @@ export const UsersModel = Users.init({
   },
   name: {
     type: DataTypes.STRING(60),
-    allowNull: false
   },
   email: {
     type: DataTypes.STRING,
@@ -53,7 +52,7 @@ export const UsersModel = Users.init({
     field: 'avatar_url'
   },
   userName: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(30),
     allowNull: false,
     unique: true,
     validate: {
