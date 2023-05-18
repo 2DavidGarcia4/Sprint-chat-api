@@ -5,6 +5,14 @@ import { setErrorResposne } from '../utils/functions'
 import { Request, Response } from 'express'
 import validators from '../utils/validators'
 
+export function tokenGenerator(id: string, email: string) {
+  return jwt.sign({
+    exp:  Math.floor(Date.now() / 1000) + (7*24*60*60),
+    id,
+    email,
+  }, jwtSecret)
+}
+
 export async function login(req: Request, res: Response) {
   try {
     const { email, password } = req.body
@@ -17,11 +25,7 @@ export async function login(req: Request, res: Response) {
     const response = await loginUser(email, password)
 
     if(response){
-      const token = jwt.sign({
-        exp:  Math.floor(Date.now() / 1000) + (7*24*60*60),
-        id: response.id,
-        email: response.email,
-      }, jwtSecret)
+      const token = tokenGenerator(response.id, response.email)
       
       res.status(200).json({
         message: 'correct credentials, user logged',
