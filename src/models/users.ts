@@ -42,6 +42,9 @@ export const UsersModel = Users.init({
     type: DataTypes.ARRAY(DataTypes.UUID),
     defaultValue: []
   },
+  color: {
+    type: DataTypes.STRING,
+  },
   password: {
     type: DataTypes.STRING,
     unique: true,

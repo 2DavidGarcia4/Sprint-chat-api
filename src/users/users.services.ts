@@ -3,6 +3,17 @@ import usersControllers from "./users.controllers"
 import { setErrorResposne } from "../utils/functions"
 import validators from "../utils/validators"
 import { hashPassword } from "../utils/functions"
+import { tokenGenerator } from "../auth/auth.services"
+import userStatusControllers from "../userStatus/userStatus.controllers"
+
+const logedUser = (req: Request, res: Response) => {
+  try {
+    res.json(true)
+
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -15,10 +26,13 @@ const createUser = async (req: Request, res: Response) => {
     })) return 
 
     const user = await usersControllers.createUser({email, password: hashPassword(password), userName})
-    
+    const status = await userStatusControllers.createUserStatus(user.id, 1)
+    const token = tokenGenerator(user.id, user.email)
+
     res.status(201).json({
       message: 'New registered user',
-      user
+      user: {...user.dataValues, status},
+      token
     })
 
   } catch (error: any) {
@@ -55,11 +69,12 @@ const getUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const { name, about, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats } = req.body
+    const { name, about, color, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats } = req.body
     
-    if([name, about, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats].every(e=> !e)) return setErrorResposne(res, 'Bad Request', 400, {
+    if([name, about, color, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats].every(e=> !e)) return setErrorResposne(res, 'Bad Request', 400, {
       name: 'string?',
       about: 'string?',
+      color: 'string?',
       friends: 'string[]?',
       avatarUrl: 'string?',
       userName: 'string?',
@@ -94,5 +109,6 @@ export default {
   getMyUser,
   getUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  logedUser
 }

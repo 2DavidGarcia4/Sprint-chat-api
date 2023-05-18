@@ -9,7 +9,10 @@ const getUserById = (id: string) => UsersModel.findByPk(id, {
   include: [
     {
       model: UserStatusModel,
-      as: 'status'
+      as: 'status',
+      attributes: {
+        exclude: ['userId']
+      }
     },
     {
       model: ChatsModel,

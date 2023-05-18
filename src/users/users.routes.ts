@@ -2,7 +2,6 @@ import express from 'express'
 import usersServices from './users.services'
 import passport from 'passport'
 import authMiddleware from '../middlewares/auth.middleware'
-import usersControllers from './users.controllers'
 
 const router = express()
 
@@ -12,6 +11,11 @@ router.route('/@me')
 .get( 
   passport.authenticate('jwt', { session: false }),
   usersServices.getMyUser, 
+)
+
+router.get('/loged', 
+  passport.authenticate('jwt', { session: false }),
+  usersServices.logedUser, 
 )
 
 router.route('/:id')
@@ -25,7 +29,7 @@ router.route('/:id')
 )
 .delete(
   passport.authenticate('jwt', { session: false }),
-  usersControllers.deleteUser
+  usersServices.deleteUser
 )
 
 export default router
