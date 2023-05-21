@@ -7,10 +7,14 @@ const router = express()
 
 authMiddleware(passport)
 
-router.route('/@me')
-.get( 
+router.get('/@me', 
   passport.authenticate('jwt', { session: false }),
   usersServices.getMyUser, 
+)
+
+router.post('/@me/password',
+  passport.authenticate('jwt', { session: false }),
+  usersServices.verifyPassword,
 )
 
 router.get('/loged', 

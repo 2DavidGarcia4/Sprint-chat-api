@@ -5,6 +5,7 @@ import validators from "../utils/validators"
 import { hashPassword } from "../utils/functions"
 import { tokenGenerator } from "../auth/auth.services"
 import userStatusControllers from "../userStatus/userStatus.controllers"
+import { comparePassword } from "../utils/functions"
 
 const logedUser = (req: Request, res: Response) => {
   try {
@@ -66,16 +67,35 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
+const verifyPassword = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user as any
+    const { password } = req.body
+
+    if(!password) return setErrorResposne(res, 'Bad Request', 400, {
+      password: 'string',
+    })
+
+    const user = await usersControllers.getUserById(id, true)
+    const value = comparePassword(password, user?.password as string)
+    res.status(200).json(value)
+    
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
+
 const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const { name, about, color, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats } = req.body
+    const { name, about, color, friends, password, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats } = req.body
     
-    if([name, about, color, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats].every(e=> !e)) return setErrorResposne(res, 'Bad Request', 400, {
+    if([name, about, color, friends, password, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats].every(e=> e == undefined)) return setErrorResposne(res, 'Bad Request', 400, {
       name: 'string?',
       about: 'string?',
       color: 'string?',
       friends: 'string[]?',
+      password: 'string?',
       avatarUrl: 'string?',
       userName: 'string?',
       phoneNumber: 'string?',
@@ -83,7 +103,7 @@ const updateUser = async (req: Request, res: Response) => {
       archivedChats: 'string[]?'
     })
 
-    await usersControllers.updateUser(id, {name, about, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats})
+    await usersControllers.updateUser(id, {name, about, color, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats})
     const updatedUser = await usersControllers.getUserById(id)
     res.status(200).json(updatedUser)
 
@@ -108,6 +128,7 @@ export default {
   createUser,
   getMyUser,
   getUser,
+  verifyPassword,
   updateUser,
   deleteUser,
   logedUser

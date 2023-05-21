@@ -2,9 +2,9 @@ import { ChatsModel } from "../models/chats"
 import { UserStatusModel } from "../models/userStatus"
 import { UsersModel } from "../models/users"
 
-const getUserById = (id: string) => UsersModel.findByPk(id, {
+const getUserById = (id: string, include?: boolean) => UsersModel.findByPk(id, {
   attributes: {
-    exclude: ['password']
+    exclude: include ? [] : ['password']
   },
   include: [
     {
