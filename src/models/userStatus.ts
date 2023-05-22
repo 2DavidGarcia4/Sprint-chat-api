@@ -6,7 +6,7 @@ import { UsersModel } from "./users";
 class UserStatus extends DefaultModel {
   public id!: string
   public userId!: string
-  public status!: number
+  public type!: number
   public emoji!: string | null
   public message!: string | null
 }
@@ -26,7 +26,7 @@ export const UserStatusModel = UserStatus.init({
       model: UsersModel
     }
   },
-  status: {
+  type: {
     type: DataTypes.INTEGER,
     allowNull: false
   },

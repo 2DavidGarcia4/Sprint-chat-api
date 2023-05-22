@@ -13,6 +13,13 @@ class Users extends DefaultModel {
   public avatarUrl!: string | null
   public userName!: string
   public phoneNumber!: string | null
+
+  public status!: {
+    id: string
+    type: number
+    emoji: string | null
+    message: string | null
+  }
   public blockedUsers!: string[]
   public archivedChats!: string[]
   public chats?: string[]
