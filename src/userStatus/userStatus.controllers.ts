@@ -2,13 +2,13 @@ import { UserStatusModel } from '../models/userStatus'
 
 const getUserStatus = (id: string) => UserStatusModel.findByPk(id)
 
-const createUserStatus = (userId: string, status: number) => UserStatusModel.create({
+const createUserStatus = (userId: string, type: number) => UserStatusModel.create({
   userId,
-  status
+  type
 })
 
 const updateUserStatus = (id: string, data: {
-  status?: number,
+  type?: number,
   emoji?: string
   message?: string
 }) => UserStatusModel.update(data, {
