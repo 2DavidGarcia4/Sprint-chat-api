@@ -2,6 +2,7 @@ import express from 'express'
 import usersServices from './users.services'
 import passport from 'passport'
 import authMiddleware from '../middlewares/auth.middleware'
+import userStatusServices from '../userStatus/userStatus.services'
 
 const router = express()
 
@@ -15,6 +16,16 @@ router.get('/@me',
 router.post('/@me/password',
   passport.authenticate('jwt', { session: false }),
   usersServices.verifyPassword,
+)
+
+router.route('/@me/status')
+.get(
+  passport.authenticate('jwt', { session: false }),
+  userStatusServices.getUserStatus
+)
+.patch(
+  passport.authenticate('jwt', { session: false }),
+  userStatusServices.updateUserStatus
 )
 
 router.get('/loged', 
