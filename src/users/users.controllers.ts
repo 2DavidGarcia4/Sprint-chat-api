@@ -2,6 +2,12 @@ import { ChatsModel } from "../models/chats"
 import { UserStatusModel } from "../models/userStatus"
 import { UsersModel } from "../models/users"
 
+const getAllUsers = (emails?: boolean, names?: boolean) => UsersModel.findAll({
+  attributes: {
+    exclude: [(emails ? '' : 'email'), (names ? '' : ['name', 'userName']), 'about', 'friends', 'color', 'password', 'avatarUrl', 'phoneNumber', 'blockedUsers', 'archivedChats', 'createdAt', 'updatedAt'].flat()
+  }
+})
+
 const getUserById = (id: string, include?: boolean) => UsersModel.findByPk(id, {
   attributes: {
     exclude: include ? [] : ['password']
@@ -56,6 +62,7 @@ const deleteUser = (id: string) => {
 }
 
 export default {
+  getAllUsers,
   getUserById,
   getUserByEmail,
   createUser,

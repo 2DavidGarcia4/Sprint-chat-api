@@ -7,6 +7,23 @@ import { tokenGenerator } from "../auth/auth.services"
 import userStatusControllers from "../userStatus/userStatus.controllers"
 import { comparePassword } from "../utils/functions"
 
+const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const { names, emails } = req.query as any
+
+    if([names, emails].every(e=> e == undefined)) return setErrorResposne(res, 'At least one query parameter is required.', 400, {
+      names: 'boolean?',
+      emails: 'boolean?'
+    })
+
+    const users = await usersControllers.getAllUsers(emails, names)
+    res.status(200).json(users)
+
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
+
 const logedUser = (req: Request, res: Response) => {
   try {
     res.json(true)
@@ -103,7 +120,7 @@ const updateUser = async (req: Request, res: Response) => {
       archivedChats: 'string[]?'
     })
 
-    await usersControllers.updateUser(id, {name, about, color, friends, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats})
+    await usersControllers.updateUser(id, {name, about, color, friends, password: password ? hashPassword(password) : undefined, avatarUrl, userName, phoneNumber, blockedUsers, archivedChats})
     const updatedUser = await usersControllers.getUserById(id)
     res.status(200).json(updatedUser)
 
@@ -125,6 +142,7 @@ const deleteUser = async (req: Request, res: Response) => {
 }
 
 export default {
+  getAllUsers,
   createUser,
   getMyUser,
   getUser,
