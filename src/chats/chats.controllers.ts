@@ -59,10 +59,17 @@ const createChat = (data: {
   ownerId: string
 }) => ChatsModel.create(data)
 
+const getArchivedChats = (archivedChats: string[]) => ChatsModel.findAll({
+  where: {
+    id: archivedChats
+  }
+})
+
 
 export default {
   getAllChats,
   getChatById,
   getChatMembers,
-  createChat
+  createChat,
+  getArchivedChats
 }

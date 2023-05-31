@@ -29,10 +29,11 @@ export const ChatsModel = Chats.init({
   },
   ownerId: {
     type: DataTypes.UUID,
+    allowNull: false,
     field: 'owner_id',
     references: {
+      key: 'id',
       model: UsersModel,
-      key: 'id'
     }
   },
   iconUrl: {

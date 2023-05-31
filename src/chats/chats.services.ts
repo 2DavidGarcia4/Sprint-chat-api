@@ -4,6 +4,7 @@ import { setErrorResposne } from "../utils/functions";
 import membersControllers from "../members/members.controllers";
 import notificationsControllers from "../notifications/notifications.controllers";
 import messagesControllers from "../messages/messages.controllers";
+import usersControllers from "../users/users.controllers";
 
 const getAllChats = async (req: Request, res: Response) => {
   try {
@@ -159,6 +160,22 @@ const createMessage = async (req: Request, res: Response) => {
 }
 
 
+const getArchivedChats = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user as any
+
+    const user = await usersControllers.getUserById(id)
+    if(!user) return setErrorResposne(res, 'User not found')
+
+    const archivedChats = await chatsControllers.getArchivedChats(user.archivedChats)
+    res.status(200).json(archivedChats)
+
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
+
+
 export default {
   getAllChats,
   getChatById,
@@ -170,5 +187,7 @@ export default {
   updateChatNotification,
 
   getAllMessages,
-  createMessage
+  createMessage,
+
+  getArchivedChats
 }
