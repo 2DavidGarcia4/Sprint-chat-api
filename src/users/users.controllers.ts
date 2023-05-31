@@ -61,11 +61,26 @@ const deleteUser = (id: string) => {
   })
 }
 
+const getFriends = (friends: string[]) => UsersModel.findAll({
+  where: {
+    id: friends
+  }
+})
+
+const getBlockedUsers = (blockedUsers: string[]) => UsersModel.findAll({
+  where: {
+    id: blockedUsers
+  }
+})
+
+
 export default {
   getAllUsers,
   getUserById,
   getUserByEmail,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getFriends,
+  getBlockedUsers,
 }

@@ -141,6 +141,37 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
+const getFriends = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user as any
+
+    const user = await usersControllers.getUserById(id)
+    if(!user) return setErrorResposne(res, 'User not found', 404)
+
+    const friends = await usersControllers.getFriends(user.friends)
+    res.status(200).json(friends)
+
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
+
+const getBlockedUsers = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user as any
+
+    const user = await usersControllers.getUserById(id)
+    if(!user) return setErrorResposne(res, 'User not found', 404)
+
+    const friends = await usersControllers.getBlockedUsers(user.blockedUsers)
+    res.status(200).json(friends)
+
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
+
+
 export default {
   getAllUsers,
   createUser,
@@ -149,5 +180,7 @@ export default {
   verifyPassword,
   updateUser,
   deleteUser,
-  logedUser
+  logedUser,
+  getFriends,
+  getBlockedUsers
 }
