@@ -30,12 +30,12 @@ export function initializeModels() {
   });
   FriendsRequestsModel.belongsTo(UsersModel, {
     foreignKey: 'senderId',
-    as: 'sentRequests'
+    as: 'sender'
   });
   
   FriendsRequestsModel.belongsTo(UsersModel, {
     foreignKey: 'receiverId',
-    as: 'receivedRequests'
+    as: 'receiver'
   });
   
   UserStatusModel.belongsTo(UsersModel)
