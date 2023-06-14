@@ -5,6 +5,7 @@ import authRoutes from './auth/auth.routes'
 import usersRoutes from './users/users.routes'
 import statusRoutes from './status/status.routes'
 import chatsRoutes from './chats/chats.routes'
+import friendsRoutes from './friends/friends.routes'
 import messagesRoutes from './messages/messages.routes'
 import notificationsRoutes from './notifications/notifications.routes'
 
@@ -17,6 +18,7 @@ app.use(`${prefix}auth`, authRoutes)
 app.use(`${prefix}users`, usersRoutes)
 app.use(`${prefix}status`, statusRoutes)
 app.use(`${prefix}chats`, chatsRoutes)
+app.use(`${prefix}friends`, friendsRoutes)
 app.use(`${prefix}messages`, messagesRoutes)
 app.use(`${prefix}notifications`, notificationsRoutes)
 
