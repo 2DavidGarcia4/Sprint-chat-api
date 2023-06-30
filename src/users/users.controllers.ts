@@ -1,10 +1,18 @@
-import { ChatsModel } from "../models/chats"
 import { UserStatusModel } from "../models/userStatus"
 import { UsersModel } from "../models/users"
 
-const getAllUsers = (emails?: boolean, names?: boolean) => UsersModel.findAll({
+const getAllUsers = (emails?: boolean, names?: boolean, preview?: boolean) => UsersModel.findAll({
   attributes: {
-    exclude: [(emails ? '' : 'email'), (names ? '' : ['name', 'userName']), 'about', 'friends', 'color', 'password', 'avatarUrl', 'phoneNumber', 'blockedUsers', 'archivedChats', 'createdAt', 'updatedAt'].flat()
+    exclude: [
+      (preview ? '' :  
+        [ 
+          'avatarUrl',
+          (emails ? '' : 'email'), 
+          (names ? '' : ['name', 'userName'])
+        ]
+      ),
+      'about', 'friends', 'color', 'password', 'phoneNumber', 'blockedUsers', 'archivedChats', 'createdAt', 'updatedAt'
+    ].flat(2)
   }
 })
 
@@ -19,10 +27,6 @@ const getUserById = (id: string, include?: boolean) => UsersModel.findByPk(id, {
       attributes: {
         exclude: ['userId']
       }
-    },
-    {
-      model: ChatsModel,
-      through: { attributes: [] }
     }
   ]
 })
@@ -41,7 +45,19 @@ const createUser = (data: {
 }) => UsersModel.create(data)
 
 
-const updateUser = (id: string, newData: object) => UsersModel.update(newData, {
+const updateUser = (id: string, newData: {
+  name?: string
+  email?: string
+  about?: string
+  friends?: string[]
+  color?: string
+  password?: string
+  avatarUrl?: string 
+  userName?: string
+  phoneNumber?: string
+  blockedUsers?: string[]
+  archivedChats?: string[]
+}) => UsersModel.update(newData, {
   where: {
     id
   }
@@ -63,8 +79,17 @@ const deleteUser = (id: string) => {
 
 const getFriends = (friends: string[]) => UsersModel.findAll({
   where: {
-    id: friends
-  }
+    id: friends,
+  },
+  include: [
+    {
+      model: UserStatusModel,
+      as: 'status',
+      attributes: {
+        exclude: ['userId']
+      }
+    }
+  ]
 })
 
 const getBlockedUsers = (blockedUsers: string[]) => UsersModel.findAll({

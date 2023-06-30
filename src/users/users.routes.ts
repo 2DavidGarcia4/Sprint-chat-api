@@ -52,11 +52,6 @@ router.route('/:id')
   usersServices.deleteUser
 )
 
-router.get('/@me/friends', 
-  passport.authenticate('jwt', { session: false }),
-  usersServices.getFriends
-)
-
 router.get('/@me/blocked', 
   passport.authenticate('jwt', { session: false }),
   usersServices.getBlockedUsers

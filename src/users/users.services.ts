@@ -9,14 +9,15 @@ import { comparePassword } from "../utils/functions"
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const { names, emails } = req.query as any
+    const { names, emails, preview } = req.query as any
 
-    if([names, emails].every(e=> e == undefined)) return setErrorResposne(res, 'At least one query parameter is required.', 400, {
+    if([names, emails, preview].every(e=> e == undefined)) return setErrorResposne(res, 'At least one query parameter is required.', 400, {
       names: 'boolean?',
-      emails: 'boolean?'
+      emails: 'boolean?',
+      preview: 'boolean?'
     })
 
-    const users = await usersControllers.getAllUsers(emails, names)
+    const users = await usersControllers.getAllUsers(emails, names, preview)
     res.status(200).json(users)
 
   } catch (error: any) {
@@ -141,21 +142,6 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
-const getFriends = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.user as any
-
-    const user = await usersControllers.getUserById(id)
-    if(!user) return setErrorResposne(res, 'User not found', 404)
-
-    const friends = await usersControllers.getFriends(user.friends)
-    res.status(200).json(friends)
-
-  } catch (error: any) {
-    setErrorResposne(res, error.message)
-  }
-}
-
 const getBlockedUsers = async (req: Request, res: Response) => {
   try {
     const { id } = req.user as any
@@ -181,6 +167,5 @@ export default {
   updateUser,
   deleteUser,
   logedUser,
-  getFriends,
   getBlockedUsers
 }
