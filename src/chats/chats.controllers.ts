@@ -2,6 +2,8 @@ import { PermissionsModel } from "../models/permissions";
 import { ChatsModel } from "../models/chats";
 import { UsersModel } from "../models/users";
 import { ChatNotificationsModel } from "../models/chatNotifications";
+import { Op } from "sequelize";
+import { MembersModel } from "../models/members";
 
 const getAllChats = (userId: string) => UsersModel.findByPk(userId, {
   attributes: {
@@ -15,10 +17,7 @@ const getAllChats = (userId: string) => UsersModel.findByPk(userId, {
   ]
 })
 
-const getChatById = (id: string) => {
-  console.log(UsersModel.associations)
-  console.log(ChatNotificationsModel.associations)
-  return ChatsModel.findByPk(id, {
+const getChatById = (id: string) => ChatsModel.findByPk(id, {
   include: [
     {
       model: ChatNotificationsModel,
@@ -34,7 +33,22 @@ const getChatById = (id: string) => {
     }
   ]
 })
-}
+
+const getChatByFriend = (firstUserId: string, lastUserId: string) => ChatsModel.findOne({
+  where: {
+    type: 0,
+  },
+  include: [
+    {
+      model: UsersModel,
+      where: {
+        id: [firstUserId, lastUserId]
+      },
+      through: { attributes: [] },
+    }
+  ]
+})
+
 
 const getChatMembers = (id: string) => ChatsModel.findByPk(id, {
   include: [
@@ -54,9 +68,11 @@ const getChatMembers = (id: string) => ChatsModel.findByPk(id, {
 })
 
 const createChat = (data: {
-  name: string
+  name?: string
   type?: number
   ownerId: string
+  iconUrl?: string
+  description?: string
 }) => ChatsModel.create(data)
 
 const getArchivedChats = (archivedChats: string[]) => ChatsModel.findAll({
@@ -69,6 +85,7 @@ const getArchivedChats = (archivedChats: string[]) => ChatsModel.findAll({
 export default {
   getAllChats,
   getChatById,
+  getChatByFriend,
   getChatMembers,
   createChat,
   getArchivedChats

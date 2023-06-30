@@ -22,6 +22,11 @@ router.get('/archived',
   chatsServices.getArchivedChats
 )
 
+router.get('/friend/:userId',
+  passport.authenticate('jwt', { session: false }),
+  chatsServices.getChatByFriend
+)
+
 
 router.route('/:id')
 .get(

@@ -30,6 +30,22 @@ const getChatById = async (req: Request, res: Response) => {
   }
 }
 
+const getChatByFriend = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user as any
+    const { userId } = req.params
+
+    const chat = await chatsControllers.getChatByFriend(id, userId)
+    console.log(chat)
+    if(!chat) return setErrorResposne(res, 'Chat not found', 404)
+
+    res.status(200).json(chat)
+    
+  } catch (error: any) {
+    setErrorResposne(res, error.message)
+  }
+}
+
 const getChatMembers = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
@@ -45,14 +61,15 @@ const getChatMembers = async (req: Request, res: Response) => {
 const createChat = async (req: Request, res: Response) => {
   try {
     const { id } = req.user as any
-    const { name, type } = req.body
+    const { name, type, description, iconUrl } = req.body
 
     if(type == undefined) return setErrorResposne(res, 'Missing data', 400, {
       type: 'number <0 | 1>',
-      name: 'string?'
+      name: 'string?',
+      iconUrl: 'string?'
     })
 
-    const newChat = await chatsControllers.createChat({ownerId: id, name, type})
+    const newChat = await chatsControllers.createChat({ownerId: id, name, type, description, iconUrl})
     await membersControllers.createMember(newChat.id, id)
     res.status(201).json(newChat)
 
@@ -180,6 +197,7 @@ export default {
   getAllChats,
   getChatById,
   getChatMembers,
+  getChatByFriend,
   createChat,
 
   getChatNotifications,
