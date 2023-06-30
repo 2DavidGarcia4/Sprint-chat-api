@@ -1,7 +1,7 @@
 import { sequelize } from './utils/database'
 import { port } from './config'
 import { initializeModels } from './models/initModels'
-import app from "./api";
+import { server } from './socket'
 
 ;(async () => {
   try {
@@ -9,7 +9,7 @@ import app from "./api";
     console.log('✅ Connection to the database has been established successfully.');
     initializeModels()
 
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`🟢 Server started at port ${port}`);
     });
 
